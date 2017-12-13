@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "blockchain.info": "^2.10.1",
     "botbuilder": "^3.9.1",
     "botbuilder-cognitiveservices": "^1.1.0",
+    "promise": "^8.0.1",
     "restify": "^5.2.0"
   }
 }

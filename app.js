@@ -1,5 +1,8 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var blockchain = require('blockchain.info');
+var exchange = require('blockchain.info/exchange');
+var Promise = require('promise');
 var cognitiveServices = require('botbuilder-cognitiveservices');
 
 // Setup Restify Server
@@ -43,7 +46,11 @@ intents.matches('qna', [
 
 intents.onDefault([
     function(session){
-        session.send('Sorry!! No match!!');
+        var res = exchange.getTicker(null);
+        res.then(function(value) {
+            session.send('Sorry!! No match!! \n Here somme exchange info :'+JSON.stringify(value));
+        });
+
     }
 ]);
 
