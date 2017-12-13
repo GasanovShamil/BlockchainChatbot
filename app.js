@@ -20,3 +20,30 @@ server.post('/api/messages', connector.listen());
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector);
 
+var qnaMakerRecogniser = new cognitiveServices.QnAMakerRecognizer({
+    knowledgeBaseId:'97763c34-65da-40f4-9fa3-9a934848e02a',
+    subscriptionKey:'97d7c8e2b5c94ce295787da257790c86',
+    top: 4
+});
+
+var luisEndpoint = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/83e916ab-5ee4-4507-95d6-21b15ef29211?subscription-key=0898a72fbc3341dfb5220cae1a6b77b9&spellCheck=true&verbose=true&timezoneOffset=60';
+var luisRecognizer = new builder.LuisRecognizer(luisEndpoint);
+
+var intents = new builder.IntentDialog({ recognizers: [qnaMakerRecogniser, luisRecognizer] });
+bot.dialog('/', intents);
+
+intents.matches('luisIntent', builder.DialogAction.send('Inside LUIS Intent 2.'));
+
+intents.matches('qna', [
+    function (session, args, next) {
+        var answerEntity = builder.EntityRecognizer.findEntity(args.entities, 'answer');
+        session.send(answerEntity.entity);
+    }
+]);
+
+intents.onDefault([
+    function(session){
+        session.send('Sorry!! No match!!');
+    }
+]);
+
