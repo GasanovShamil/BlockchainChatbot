@@ -5,6 +5,7 @@ var exchange = require('blockchain.info/exchange');
 var Promise = require('promise');
 var cognitiveServices = require('botbuilder-cognitiveservices');
 
+
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -29,13 +30,14 @@ var qnaMakerRecogniser = new cognitiveServices.QnAMakerRecognizer({
     top: 4
 });
 
-var luisEndpoint = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/83e916ab-5ee4-4507-95d6-21b15ef29211?subscription-key=0898a72fbc3341dfb5220cae1a6b77b9&spellCheck=true&verbose=true&timezoneOffset=60';
+var luisEndpoint = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/83e916ab-5ee4-4507-95d6-21b15ef29211?subscription-key=0898a72fbc3341dfb5220cae1a6b77b9&verbose=true&timezoneOffset=60';
 var luisRecognizer = new builder.LuisRecognizer(luisEndpoint);
 
 var intents = new builder.IntentDialog({ recognizers: [qnaMakerRecogniser, luisRecognizer] });
 bot.dialog('/', intents);
 
-intents.matches('luisIntent', builder.DialogAction.send('Inside LUIS Intent 2.'));
+intents.matches('Blockchain.RecieveBitcoin', builder.DialogAction.send('You want to recieve btc'));
+intents.matches('Blockchain.SendBitcoin', builder.DialogAction.send('You want to send btc'));
 
 intents.matches('qna', [
     function (session, args, next) {
