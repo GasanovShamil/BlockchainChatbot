@@ -33,7 +33,7 @@ var bot = new builder.UniversalBot(connector);
 var luisEndpoint = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/83e916ab-5ee4-4507-95d6-21b15ef29211?subscription-key=0898a72fbc3341dfb5220cae1a6b77b9&verbose=true&timezoneOffset=60';
 var luisRecognizer = new builder.LuisRecognizer(luisEndpoint);
 
-var options = { apiCode: 'df60d92b-6b4f-4132-8aae-b982349304f8', apiHost: 'http://127.0.0.1:3000' };
+var options = { apiCode: 'df60d92b-6b4f-4132-8aae-b982349304f8', apiHost: 'http://vps456622.ovh.net:3031/' };
 
 bot.on('conversationUpdate', function (message) {
     if (message.membersAdded) {
@@ -95,8 +95,8 @@ bot.dialog('Login', [
         builder.Prompts.text(session, 'Please enter your account address');
     },
     function (session, results) {
-        session.userData.BC_address = results.response;
-        // session.userData.BC_address = 'e4a65547-1ae4-477d-b15d-61cbdbc71f0c';
+        // session.userData.BC_address = results.response;
+        session.userData.BC_address = 'e4a65547-1ae4-477d-b15d-61cbdbc71f0c';
         builder.Prompts.text(session, 'Please enter your account password');
     },
     function (session, results) {
