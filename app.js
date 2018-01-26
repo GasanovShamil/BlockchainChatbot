@@ -95,8 +95,8 @@ bot.dialog('Login', [
         builder.Prompts.text(session, 'Please enter your account address');
     },
     function (session, results) {
-        //session.userData.BC_address = results.response;
-        session.userData.BC_address = 'e4a65547-1ae4-477d-b15d-61cbdbc71f0c';
+        session.userData.BC_address = results.response;
+        // session.userData.BC_address = 'e4a65547-1ae4-477d-b15d-61cbdbc71f0c';
         builder.Prompts.text(session, 'Please enter your account password');
     },
     function (session, results) {
